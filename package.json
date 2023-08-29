@@ -2,8 +2,8 @@
   "name": "usefetch",
   "version": "1.0.0",
   "type": "module",
-  "source": "src/main.ts",
-  "main": "dist/index.ts",
+  "source": "src/index.ts",
+  "main": "dist/index.js",
   "module": "dist/index.module.js",
   "unpkg": "dist/index.umd.js",
   "scripts": {

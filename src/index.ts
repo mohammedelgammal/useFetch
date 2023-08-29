@@ -4,9 +4,9 @@ import { useState, useEffect } from "react";
 import axios, { AxiosError, AxiosResponse } from "axios";
 
 // Types
-import { QueryResponse, Props } from "types/useFetch";
+import { QueryResponse, Props } from "types/useFetchTypes";
 
-const useQuery = ({
+const useFetch = ({
   url,
   method,
   payload,
@@ -47,4 +47,4 @@ const useQuery = ({
   return { isLoading, error, data, executeQuery };
 };
 
-export default useQuery;
+export default useFetch;
