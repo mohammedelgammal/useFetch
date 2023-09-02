@@ -1,18 +1,20 @@
 // Libraries
 import { AxiosError, AxiosResponse } from "axios";
 
-interface Props {
+interface PropsType {
   url: string;
   method: string;
   payload?: object;
   executeImmediately?: boolean;
 }
 
-interface QueryResponse {
+interface QueryResponseType {
   isLoading?: boolean;
+  isError?: boolean;
   error?: AxiosError;
+  isSuccess?: boolean;
   data?: AxiosResponse;
-  executeQuery: () => void;
+  executeQuery?: () => void;
 }
 
-export type { QueryResponse, Props };
+export type { QueryResponseType, PropsType };

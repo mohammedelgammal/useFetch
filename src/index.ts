@@ -4,22 +4,20 @@ import { useState, useEffect } from "react";
 import axios, { AxiosError, AxiosResponse } from "axios";
 
 // Types
-import { QueryResponse, Props } from "types/useFetchTypes";
+import { QueryResponseType, PropsType } from "types/useFetchTypes";
 
 const useFetch = ({
   url,
   method,
   payload,
   executeImmediately = false,
-}: Props): QueryResponse => {
-  const [isLoading, setIsLoading] = useState<boolean>();
-  const [error, setError] = useState<AxiosError>();
-  const [data, setData] = useState<AxiosResponse>();
+}: PropsType): QueryResponseType => {
+  const [queryResponse, setQueryResponse] = useState<QueryResponseType>({});
 
-  const executeQuery = () => handleApiCall({ url, method, payload });
+  const executeQuery = (): void => handleApiCall({ url, method, payload });
 
-  const handleApiCall = ({ url, method, payload }: Props): void => {
-    setIsLoading(true);
+  const handleApiCall = ({ url, method, payload }: PropsType): void => {
+    setQueryResponse({ ...queryResponse, isLoading: true });
     axios({
       method,
       url,
@@ -27,16 +25,22 @@ const useFetch = ({
     })
       .then(
         (response: AxiosResponse): void => {
-          setData(response.data);
-          setIsLoading(false);
+          setQueryResponse({
+            ...queryResponse,
+            data: response?.data,
+            isLoading: false,
+          });
         },
         (error: AxiosError): void => {
-          setError(error);
-          setIsLoading(false);
+          setQueryResponse({
+            ...queryResponse,
+            error: error,
+            isLoading: false,
+          });
         }
       )
       .finally((): void => {
-        setIsLoading(false);
+        setQueryResponse({ ...queryResponse, isLoading: false });
       });
   };
 
@@ -44,7 +48,7 @@ const useFetch = ({
     executeImmediately && handleApiCall({ url, method, payload });
   }, []);
 
-  return { isLoading, error, data, executeQuery };
+  return { ...queryResponse, executeQuery };
 };
 
 export default useFetch;
