@@ -26,10 +26,10 @@ Inside your functional component, invoke useFetch while providing the necessary 
 
 ```
 function MyComponent() {
-    const { isLoading, error, data, executeQuery } = useFetch({
+    const { isLoading, error, data, executeQuery, isSuccess, isError } = useFetch({
         url: 'https://api.example.com/data',
         method: 'GET', // or 'POST', 'PUT', etc.
-        payload: { /_ your request payload _/ },
+        payload: { /* your request payload */ },
         executeImmediately: true, // Set to true for immediate execution upon component mounting
     });
 
@@ -38,8 +38,8 @@ function MyComponent() {
     return (
         <div>
             {isLoading && <p>Loading...</p>}
-            {error && <p>Error: {error.message}</p>}
-            {data && <pre>{JSON.stringify(data, null, 2)}</pre>}
+            {isError && <p>Error: {error.message}</p>}
+            {isSuccess && <pre>{JSON.stringify(data, null, 2)}</pre>}
         </div>
     );
 }
@@ -59,7 +59,11 @@ function MyComponent() {
 
 **isLoading (boolean)**: This boolean value indicates whether the API request is currently in progress.
 
+**isError (boolean)**: Indicates whether the API request encountered an error (true) or not (false).
+
 **error (AxiosError)**: In the event of a request failure, this object contains detailed error information.
+
+**isSuccess (boolean)**: Indicates whether the API request was successful (true) or not (false).
 
 **data (AxiosResponse)**: Upon successful execution of the request, this object holds the response data.
 
@@ -81,7 +85,7 @@ The following examples illustrate how useFetch simplifies data fetching within y
 **// Example 1: Data fetching on component mount**
 
 ```
-const { isLoading, error, data } = useFetch({
+const { isLoading, error, data, isSuccess, isError } = useFetch({
     url: 'https://api.example.com/data',
     method: 'GET',
     executeImmediately: true,
@@ -91,7 +95,7 @@ const { isLoading, error, data } = useFetch({
 **// Example 2: Manually triggering a query**
 
 ```
-const { isLoading, error, data, executeQuery } = useFetch({
+const { isLoading, error, data, executeQuery, isSuccess, isError } = useFetch({
     url: 'https://api.example.com/data',
     method: 'GET',
 });
@@ -100,7 +104,7 @@ const { isLoading, error, data, executeQuery } = useFetch({
 **// Example 3: Customizing the request with payload**
 
 ```
-const { isLoading, error, data, executeQuery } = useFetch({
+const { isLoading, error, data, executeQuery, isSuccess, isError } = useFetch({
     url: 'https://api.example.com/data',
     method: 'POST',
     payload: { key: 'value' },
