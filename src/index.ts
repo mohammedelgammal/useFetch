@@ -17,7 +17,12 @@ const useFetch = ({
   const executeQuery = (): void => handleApiCall({ url, method, payload });
 
   const handleApiCall = ({ url, method, payload }: PropsType): void => {
-    setQueryResponse({ ...queryResponse, isLoading: true });
+    setQueryResponse({
+      ...queryResponse,
+      isLoading: true,
+      isSuccess: false,
+      isError: false,
+    });
     axios({
       method,
       url,
@@ -28,6 +33,7 @@ const useFetch = ({
           setQueryResponse({
             ...queryResponse,
             data: response?.data,
+            isSuccess: true,
             isLoading: false,
           });
         },
@@ -35,6 +41,7 @@ const useFetch = ({
           setQueryResponse({
             ...queryResponse,
             error: error,
+            isError: true,
             isLoading: false,
           });
         }
