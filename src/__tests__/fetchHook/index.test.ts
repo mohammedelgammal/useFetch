@@ -5,11 +5,11 @@ import { renderHook } from "@testing-library/react";
 import { PropsType } from "types/useFetchTypes";
 
 // Hooks
-import useFetch from "index";
+import useFetch from "../../index";
 
 // Constants
 const params: PropsType = {
-  url: import.meta.env.VITE_URL,
+  url: "http://localhost:3001/users",
   method: "POST",
   payload: {
     username: "testuser",
@@ -19,7 +19,8 @@ const params: PropsType = {
 };
 
 test("Should render intial state", () => {
-  const {} = renderHook(useFetch, {
+  const { result } = renderHook(useFetch, {
     initialProps: params,
   });
+  expect(result).toBe(false);
 });
