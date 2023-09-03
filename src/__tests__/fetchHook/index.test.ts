@@ -16,11 +16,14 @@ const params: PropsType = {
     email: "testuser@testdomain.com",
     password: "testpassword",
   },
+  executeImmediately: true,
 };
 
 test("Should render intial state", () => {
   const { result } = renderHook(useFetch, {
     initialProps: params,
   });
-  expect(result).toBe(false);
+  expect(result.current.isLoading).toBe(true);
+  expect(result.current.isError).toBe(false);
+  expect(result.current.isSuccess).toBe(false);
 });
