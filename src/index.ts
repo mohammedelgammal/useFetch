@@ -54,6 +54,7 @@ const useFetch = ({
   useEffect(() => {
     executeImmediately && handleApiCall({ url, method, payload });
   }, []);
+  console.log({ ...queryResponse });
 
   return { ...queryResponse, executeQuery };
 };
